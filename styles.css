@@ -1,0 +1,393 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -ms-content-zooming: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,
+body {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  background-color: rgb(66, 66, 88);
+  color: #fff;
+  background-image: url(./img/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg);
+}
+
+.button-bar {
+  border: 1px solid black;
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-left: 2%;
+  padding-top: 25px;
+  padding-bottom: 15px;
+  height: fit-content;
+  border-radius: 5%;
+  background-color: rgb(170, 160, 160);
+  width: 200px;
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #000;
+}
+
+input[type="file"] {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+input[type="button"] {
+  display: none;
+}
+
+.custom-button {
+  border: 1px solid black;
+  display: inline-block;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  height: 30px;
+  width: 125px;
+  cursor: pointer;
+  border-radius: 5%;
+  background-color: #84cbf3;
+  outline: #00008b;
+}
+
+.custom-button:hover {
+  background-color: #304c5e;
+}
+
+#editor {
+  display: inline-block;
+}
+
+#preview {
+  border: 3px solid black;
+  background-color: whitesmoke;
+  margin-left: 5rem;
+  margin-top: 3rem;
+}
+
+#pano {
+  position: relative;
+  width: 60rem;
+  height: 40rem;
+  overflow: hidden;
+}
+
+#screen-log {
+  color: #000;
+  display: block;
+  margin-left: 5%;
+  width: 300px;
+}
+
+.info-hotspot {
+  line-height: 1.2em;
+  opacity: 0.9;
+  -webkit-transition: opacity 0.2s 0.2s;
+  transition: opacity 0.2s 0.2s;
+}
+
+.info-hotspot.visible {
+  opacity: 1;
+}
+
+.info-hotspot .info-hotspot-header {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgb(103, 115, 131);
+  cursor: pointer;
+  -webkit-transition: width 0.3s ease-in-out 0.5s,
+    border-radius 0.3s ease-in-out 0.5s;
+  transition: width 0.3s ease-in-out 0.5s, border-radius 0.3s ease-in-out 0.5s;
+}
+
+.info-hotspot.visible .info-hotspot-header,
+.no-touch .info-hotspot.visible .info-hotspot-header:hover {
+  width: 260px;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+}
+
+.info-hotspot .info-hotspot-icon-wrapper {
+  width: 40px;
+  height: 40px;
+}
+
+.info-hotspot .info-hotspot-icon {
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+}
+
+.info-hotspot .info-hotspot-title-wrapper {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  width: 0;
+  height: 40px;
+  padding: 0;
+  overflow: hidden;
+  -webkit-transition: width 0s 0.4s, padding 0s 0.4s;
+  transition: width 0s 0.4s, padding 0s 0.4s;
+}
+
+.info-hotspot.visible .info-hotspot-title-wrapper,
+.info-hotspot .info-hotspot-title-wrapper:before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.info-hotspot .info-hotspot-title {
+  display: inline-block;
+  vertical-align: middle;
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.info-hotspot .info-hotspot-close-wrapper {
+  position: absolute;
+  left: 260px;
+  top: 0;
+  height: 40px;
+  width: 40px;
+  border-top-right-radius: 5px;
+  background-color: rgb(78, 88, 104);
+  visibility: hidden;
+  -ms-transform: perspective(200px) rotateY(90deg);
+  -webkit-transform: perspective(200px) rotateY(90deg);
+  transform: perspective(200px) rotateY(90deg);
+  -ms-transform-origin: 0 50% 0;
+  -webkit-transform-origin: 0 50% 0;
+  transform-origin: 0 50% 0;
+  -webkit-transition: -ms-transform 0.3s 0.3s, -webkit-transform 0.3s 0.3s,
+    transform 0.3s 0.3s, visibility 0s 0.6s;
+  transition: -ms-transform 0.3s 0.3s, -webkit-transform 0.3s 0.3s,
+    transform 0.3s 0.3s, visibility 0s 0.6s;
+}
+
+.info-hotspot.visible .info-hotspot-close-wrapper {
+  visibility: visible;
+  -ms-transform: perspective(200px) rotateY(0deg);
+  -webkit-transform: perspective(200px) rotateY(0deg);
+  transform: perspective(200px) rotateY(0deg);
+  -webkit-transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    visibility 0s 0s;
+  transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    visibility 0s 0s;
+}
+
+.info-hotspot .info-hotspot-close-icon {
+  width: 70%;
+  height: 70%;
+  margin: 15%;
+}
+
+.info-hotspot .info-hotspot-text {
+  position: absolute;
+  width: 300px;
+  height: auto;
+  max-height: 200px;
+  top: 40px;
+  left: 0;
+  padding: 10px;
+  background-color: rgb(58, 68, 84);
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow-y: auto;
+  visibility: hidden;
+  /* rotate(90deg) causes transition flicker on Firefox 58 */
+  -ms-transform: perspective(200px) rotateX(-89.999deg);
+  -webkit-transform: perspective(200px) rotateX(-89.999deg);
+  transform: perspective(200px) rotateX(-89.999deg);
+  -ms-transform-origin: 50% 0 0;
+  -webkit-transform-origin: 50% 0 0;
+  transform-origin: 50% 0 0;
+  -webkit-transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    visibility 0s 0.3s;
+  transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    visibility 0s 0.3s;
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.info-hotspot.visible .info-hotspot-text {
+  visibility: visible;
+  -ms-transform: perspective(200px) rotateX(0deg);
+  -webkit-transform: perspective(200px) rotateX(0deg);
+  transform: perspective(200px) rotateX(0deg);
+  -webkit-transition: -ms-transform 0.3s 0.3s, -webkit-transform 0.3s 0.3s,
+    transform 0.3s 0.3s, visibility 0s 0s;
+  transition: -ms-transform 0.3s 0.3s, -webkit-transform 0.3s 0.3s,
+    transform 0.3s 0.3s, visibility 0s 0s;
+}
+
+/* Link hotspot */
+
+.link-hotspot {
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+  opacity: 0.9;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.no-touch .link-hotspot:hover {
+  opacity: 1;
+}
+
+.mobile .link-hotspot {
+  width: 70px;
+  height: 70px;
+}
+
+.link-hotspot-icon {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.link-hotspot-tooltip {
+  position: absolute;
+  left: 100%;
+  top: 14px; /* ( 60 - (16 + 2*8) ) / 2 */
+
+  margin-left: 3px;
+
+  font-size: 16px;
+
+  max-width: 300px;
+
+  padding: 8px 10px;
+
+  border-radius: 5px;
+
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+
+  color: #fff;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  -ms-transform: translateX(-8px);
+  -webkit-transform: translateX(-8px);
+  transform: translateX(-8px);
+
+  -webkit-transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    opacity 0.3s;
+  transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    opacity 0.3s;
+}
+
+.mobile .link-hotspot {
+  top: 19px; /* ( 70 - (16 + 2*8) ) / 2 */
+}
+
+.no-touch .link-hotspot:hover .link-hotspot-tooltip {
+  opacity: 1;
+  -ms-transform: translateX(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+/* Prevent tooltip from triggering */
+.link-hotspot-tooltip {
+  pointer-events: none;
+}
+.no-touch .link-hotspot:hover .link-hotspot-tooltip {
+  pointer-events: all;
+}
+
+/* Fallback mode without pointer-events (IE8-10) */
+.tooltip-fallback .link-hotspot-tooltip {
+  display: none;
+}
+.no-touch .tooltip-fallback .link-hotspot:hover .link-hotspot-tooltip {
+  display: block;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.select {
+  padding: 0 35px;
+  height: 32px;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#2ba9df),
+    to(#1b75bc)
+  );
+  background: -webkit-linear-gradient(top, #2ba9df, #1b75bc);
+  background: -moz- oldlinear-gradient(top, #2ba9df, #1b75bc);
+  background: -o-linear-gradient(top, #2ba9df, #1b75bc);
+  background: linear-gradient(to bottom, #2ba9df, #1b75bc);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #29aae2;
+  color: #fff;
+  font-weight: 600;
+}
+
+.select:hover {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#41b2e2),
+    to(#1e83d2)
+  );
+  background: -webkit-linear-gradient(top, #41b2e2, #1e83d2);
+  background: -moz- oldlinear-gradient(top, #41b2e2, #1e83d2);
+  background: -o-linear-gradient(top, #41b2e2, #1e83d2);
+  background: linear-gradient(to bottom, #41b2e2, #1e83d2);
+}

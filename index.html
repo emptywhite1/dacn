@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="button-bar">
+      <label class="custom-button">
+        <input id="filesInput" type="file" />
+        Upload Image
+      </label>
+
+      <label class="custom-button">
+        <input type="button" value="add info hotspot" onclick="addInfoHotspot()" />
+        Add Info Hotspot
+      </label>
+
+      <label class="custom-button">
+        <input type="button" value="add link hotspot" onclick="addLinkHotspot()" />
+        Add Link Hotspot
+      </label>
+
+      <label class="custom-button">
+        <input
+          id="filesInput"
+          type="button"
+          value="Next Scene"
+          onclick="previousScene()"
+        />
+        Previous Scene
+      </label>
+
+      <label class="custom-button">
+        <input
+          id="filesInput"
+          type="button"
+          value="Next Scene"
+          onclick="nextScene()"
+        />
+        Next Scene
+      </label>
+    </div>
+
+    <div id="editor">
+      <div id="preview"><div id="pano"></div></div>
+    </div>
+
+    <p id="screen-log"></p>
+
+    <script src="marzipano.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
