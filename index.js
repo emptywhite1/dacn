@@ -2,10 +2,22 @@ const panoElement = document.getElementById("pano");
 const inputElement = document.getElementById("filesInput");
 const screenLog = document.getElementById("screen-log");
 const preview = document.getElementById("preview");
+const linkButton = document.getElementById("link-button");
+const infoButton = document.getElementById("info-button");
 let imgUrls = [];
 let scenes = [];
 let currentScene = 0;
-var rect = { relativeWidth: 0.6, relativeHeight: 0.3, relativeX: 0.6 };
+let isAddingInfoHotspot = false;
+let isAddingLinkHotspot = false;
+
+//var rect = { relativeWidth: 0.6, relativeHeight: 0.3, relativeX: 0.6 };
+inputElement.addEventListener("change", addPano, false);
+
+panoElement.addEventListener("mousemove", logKey);
+
+panoElement.addEventListener("click", addInfoHotspot);
+
+panoElement.addEventListener("click", addLinkHotspot);
 
 //initialize viewer
 let viewerOpts = {
@@ -20,10 +32,6 @@ let limiter = Marzipano.RectilinearView.limit.traditional(
   (100 * Math.PI) / 180
 );
 let view = new Marzipano.RectilinearView({ yaw: Math.PI }, limiter);
-
-inputElement.addEventListener("change", addPano, false);
-
-panoElement.addEventListener("mousemove", logKey);
 
 function addPano() {
   const image = this.files[0];
@@ -62,25 +70,38 @@ function previousScene() {
   scenes[currentScene].switchTo();
 }
 
-function addInfoHotspot() {
-  // var imgHotspot = document.createElement('img');
-  // imgHotspot.src = 'img/info.png';
-  // imgHotspot.classList.add('hotspot');
-  // imgHotspot.addEventListener('click', function() {
-  //   switchScene(findSceneById(hotspot.target));
-  // });
-  let hotspot = createInfoHotspotElement();
-  let position = { yaw: 0, pitch: 0 };
-
-  scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
+function prepareAddInfoHotspot() {
+  switchButtonState("info-button");
+  
+}
+function prepareAddLinkHotspot() {
+  switchButtonState("link-button");
+  
 }
 
-function addLinkHotspot() {
-  
-  let hotspot = createLinkHotspotElement();
-  let position = { yaw: 0, pitch: 0 };
+function test(e) {
+  console.log("test");
+}
+
+function addInfoHotspot(e) {
+  if (!isAddingInfoHotspot) return;
+  let hotspot = createInfoHotspotElement();
+  position = getPosition(e);
 
   scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
+
+  switchButtonState("info-button");
+
+}
+
+function addLinkHotspot(e) {
+  if (!isAddingLinkHotspot) return;
+  let hotspot = createLinkHotspotElement();
+  position = getPosition(e);
+
+  scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
+
+  switchButtonState("link-button");
 
 }
 
@@ -136,7 +157,7 @@ function createInfoHotspotElement() {
   var modal = document.createElement("div");
   modal.innerHTML = wrapper.innerHTML;
   modal.classList.add("info-hotspot-modal");
-  
+
   var toggle = function () {
     wrapper.classList.toggle("visible");
     modal.classList.toggle("visible");
@@ -159,16 +180,15 @@ function createInfoHotspotElement() {
 }
 
 function createLinkHotspotElement(hotspot) {
-
   // Create wrapper element to hold icon and tooltip.
-  var wrapper = document.createElement('div');
-  wrapper.classList.add('hotspot');
-  wrapper.classList.add('link-hotspot');
+  var wrapper = document.createElement("div");
+  wrapper.classList.add("hotspot");
+  wrapper.classList.add("link-hotspot");
 
   // Create image element.
-  var icon = document.createElement('img');
-  icon.src = 'img/icon/link.png';
-  icon.classList.add('link-hotspot-icon');
+  var icon = document.createElement("img");
+  icon.src = "img/icon/link.png";
+  icon.classList.add("link-hotspot-icon");
 
   // Set rotation transform.
   // var transformProperties = [ '-ms-transform', '-webkit-transform', 'transform' ];
@@ -206,4 +226,44 @@ function logKey(e) {
     Screen X/Y: ${e.screenX}, ${e.screenY}
     Client X/Y: ${relX}, ${relY}
     Pano Yaw/Pitch: ${panoPosition.yaw}, ${panoPosition.pitch}`;
+  return panoPosition;
+}
+
+function getPosition(e) {
+  relX = e.clientX - panoElement.offsetLeft;
+  relY = e.clientY - panoElement.offsetTop;
+  panoPosition = view.screenToCoordinates({ x: relX, y: relY });
+  return panoPosition;
+}
+
+function switchButtonState(buttonType) {
+  if (buttonType == "info-button") {
+    if(isAddingLinkHotspot){
+      linkButton.classList.remove("active");
+      isAddingLinkHotspot = !isAddingLinkHotspot
+    }
+
+    if (!isAddingInfoHotspot) {
+      infoButton.classList.add("active");
+      isAddingInfoHotspot = !isAddingInfoHotspot;
+    }else{
+      infoButton.classList.remove("active");
+      isAddingInfoHotspot = !isAddingInfoHotspot;
+    }
+  }
+
+  if (buttonType == "link-button") {
+    if(isAddingInfoHotspot){
+      infoButton.classList.remove("active");
+      isAddingInfoHotspot = !isAddingInfoHotspot
+    }
+
+    if (!isAddingLinkHotspot) {
+      linkButton.classList.add("active");
+      isAddingLinkHotspot = !isAddingLinkHotspot;
+    }else{
+      linkButton.classList.remove("active");
+      isAddingLinkHotspot = !isAddingLinkHotspot;
+    }
+  }
 }

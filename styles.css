@@ -79,6 +79,10 @@ input[type="button"] {
   background-color: #304c5e;
 }
 
+.active{
+  background-color: lightgreen;
+}
+
 #editor {
   display: inline-block;
 }
