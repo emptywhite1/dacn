@@ -212,7 +212,30 @@ function createLinkHotspotElement(hotspot) {
   // tooltip.classList.add('link-hotspot-tooltip');
   // tooltip.innerHTML = findSceneDataById(hotspot.target).name;
 
+  // Drag link hotspot.
+  function onDrag(event) {
+    let getStyle = window.getComputedStyle(wrapper)
+    let left = parseInt(getStyle.left)
+    let top = parseInt(getStyle.top)
+	  
+    console.log(event)
+    
+    wrapper.style.left = (left + event.movementX) + "px"
+    wrapper.style.top = (top + event.movementY) + "px"
+  }
+
   wrapper.appendChild(icon);
+
+  icon.addEventListener("mousedown", () => {
+    viewer.controls().disable()
+    icon.classList.add("active")
+    icon.addEventListener("mousemove", onDrag)
+  })
+  document.addEventListener("mouseup", () => {
+    viewer.controls().enable()
+    icon.classList.add("active")
+    icon.removeEventListener("mousemove", onDrag)
+  })
   //wrapper.appendChild(tooltip);
 
   return wrapper;
