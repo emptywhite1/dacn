@@ -9,6 +9,7 @@ let scenes = [];
 let currentScene = 0;
 let isAddingInfoHotspot = false;
 let isAddingLinkHotspot = false;
+let dragging = false;
 
 //var rect = { relativeWidth: 0.6, relativeHeight: 0.3, relativeX: 0.6 };
 inputElement.addEventListener("change", addPano, false);
@@ -72,11 +73,9 @@ function previousScene() {
 
 function prepareAddInfoHotspot() {
   switchButtonState("info-button");
-  
 }
 function prepareAddLinkHotspot() {
   switchButtonState("link-button");
-  
 }
 
 function test(e) {
@@ -91,7 +90,6 @@ function addInfoHotspot(e) {
   scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
 
   switchButtonState("info-button");
-
 }
 
 function addLinkHotspot(e) {
@@ -102,7 +100,6 @@ function addLinkHotspot(e) {
   scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
 
   switchButtonState("link-button");
-
 }
 
 function createInfoHotspotElement() {
@@ -164,22 +161,48 @@ function createInfoHotspotElement() {
   };
 
   // Show content when hotspot is clicked.
-  wrapper
-    .querySelector(".info-hotspot-header")
-    .addEventListener("click", toggle);
+  wrapperToggle = wrapper.querySelector(".info-hotspot-header");
+  wrapperToggle.addEventListener("click", toggle);
 
   // Hide content when close icon is clicked.
-  modal
-    .querySelector(".info-hotspot-close-wrapper")
-    .addEventListener("click", toggle);
+  modalToggle = modal.querySelector(".info-hotspot-close-wrapper");
+  modalToggle.addEventListener("click", toggle);
 
-  // Prevent touch and scroll events from reaching the parent element.
-  // This prevents the view control logic from interfering with the hotspot.
+  //dragable hotspot
+  function onDrag(event) {
+    let getStyle = window.getComputedStyle(wrapper);
+    let left = parseInt(getStyle.left);
+    let top = parseInt(getStyle.top);
+
+    console.log(event);
+
+    wrapper.style.left = left + event.movementX + "px";
+    wrapper.style.top = top + event.movementY + "px";
+    dragging = true;
+  }
+
+  icon.addEventListener("mousedown", () => {
+    viewer.controls().disable();
+    icon.addEventListener("mousemove", onDrag);
+    
+  });
+  document.addEventListener("mouseup", () => {
+    viewer.controls().enable();
+    icon.removeEventListener("mousemove", onDrag);
+    if(dragging){
+      modalToggle.removeEventListener("click", toggle);
+      wrapperToggle.removeEventListener("click", toggle);
+    }else{
+      modalToggle.addEventListener("click", toggle);
+      wrapperToggle.addEventListener("click", toggle);
+    }
+    dragging = false;
+  });
 
   return wrapper;
 }
 
-function createLinkHotspotElement(hotspot) {
+function createLinkHotspotElement() {
   // Create wrapper element to hold icon and tooltip.
   var wrapper = document.createElement("div");
   wrapper.classList.add("hotspot");
@@ -214,28 +237,27 @@ function createLinkHotspotElement(hotspot) {
 
   // Drag link hotspot.
   function onDrag(event) {
-    let getStyle = window.getComputedStyle(wrapper)
-    let left = parseInt(getStyle.left)
-    let top = parseInt(getStyle.top)
-	  
-    console.log(event)
-    
-    wrapper.style.left = (left + event.movementX) + "px"
-    wrapper.style.top = (top + event.movementY) + "px"
+    let getStyle = window.getComputedStyle(wrapper);
+    let left = parseInt(getStyle.left);
+    let top = parseInt(getStyle.top);
+
+    console.log(event);
+
+    wrapper.style.left = left + event.movementX + "px";
+    wrapper.style.top = top + event.movementY + "px";
   }
 
   wrapper.appendChild(icon);
 
   icon.addEventListener("mousedown", () => {
-    viewer.controls().disable()
-    icon.classList.add("active")
-    icon.addEventListener("mousemove", onDrag)
-  })
+    viewer.controls().disable();
+
+    icon.addEventListener("mousemove", onDrag);
+  });
   document.addEventListener("mouseup", () => {
-    viewer.controls().enable()
-    icon.classList.add("active")
-    icon.removeEventListener("mousemove", onDrag)
-  })
+    viewer.controls().enable();
+    icon.removeEventListener("mousemove", onDrag);
+  });
   //wrapper.appendChild(tooltip);
 
   return wrapper;
@@ -261,30 +283,30 @@ function getPosition(e) {
 
 function switchButtonState(buttonType) {
   if (buttonType == "info-button") {
-    if(isAddingLinkHotspot){
+    if (isAddingLinkHotspot) {
       linkButton.classList.remove("active");
-      isAddingLinkHotspot = !isAddingLinkHotspot
+      isAddingLinkHotspot = !isAddingLinkHotspot;
     }
 
     if (!isAddingInfoHotspot) {
       infoButton.classList.add("active");
       isAddingInfoHotspot = !isAddingInfoHotspot;
-    }else{
+    } else {
       infoButton.classList.remove("active");
       isAddingInfoHotspot = !isAddingInfoHotspot;
     }
   }
 
   if (buttonType == "link-button") {
-    if(isAddingInfoHotspot){
+    if (isAddingInfoHotspot) {
       infoButton.classList.remove("active");
-      isAddingInfoHotspot = !isAddingInfoHotspot
+      isAddingInfoHotspot = !isAddingInfoHotspot;
     }
 
     if (!isAddingLinkHotspot) {
       linkButton.classList.add("active");
       isAddingLinkHotspot = !isAddingLinkHotspot;
-    }else{
+    } else {
       linkButton.classList.remove("active");
       isAddingLinkHotspot = !isAddingLinkHotspot;
     }
