@@ -164,6 +164,16 @@ input[type="button"] {
   transition: width 0s 0.4s, padding 0s 0.4s;
 }
 
+.info-hotspot.visible .info-hotspot-title-wrapper
+{
+  width: 220px;
+  padding: 0 5px;
+  -webkit-transition: width 0s 0.4s,
+                      padding 0s 0.4s;
+  transition: width 0s 0.4s,
+              padding 0s 0.4s;
+}
+
 .info-hotspot.visible .info-hotspot-title-wrapper,
 .info-hotspot .info-hotspot-title-wrapper:before {
   content: "";
@@ -173,13 +183,19 @@ input[type="button"] {
 }
 
 .info-hotspot .info-hotspot-title {
+  min-width: 200px;
+  margin: auto;
+  font-size: 15px;
   display: inline-block;
   vertical-align: middle;
-
+  background-color: rgb(103, 115, 131);
+  border: 0;
+  color: white;
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  z-index: 100;
 }
 
 .info-hotspot .info-hotspot-close-wrapper {
@@ -221,6 +237,8 @@ input[type="button"] {
 }
 
 .info-hotspot .info-hotspot-text {
+  margin: 0;
+  color: white;
   position: absolute;
   width: 300px;
   height: auto;
@@ -249,10 +267,12 @@ input[type="button"] {
   -webkit-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  
 }
 
 .info-hotspot.visible .info-hotspot-text {
   visibility: visible;
+  max-height: 200px;
   -ms-transform: perspective(200px) rotateX(0deg);
   -webkit-transform: perspective(200px) rotateX(0deg);
   transform: perspective(200px) rotateX(0deg);

@@ -123,9 +123,10 @@ function createInfoHotspotElement() {
   // Create title element.
   var titleWrapper = document.createElement("div");
   titleWrapper.classList.add("info-hotspot-title-wrapper");
-  var title = document.createElement("div");
+  var title = document.createElement("p");
   title.classList.add("info-hotspot-title");
   title.innerHTML = "Title";
+  title.setAttribute("contenteditable", "true")
   titleWrapper.appendChild(title);
 
   // Create close element.
@@ -142,7 +143,8 @@ function createInfoHotspotElement() {
   header.appendChild(closeWrapper);
 
   // Create text element.
-  var text = document.createElement("div");
+  var text = document.createElement("p");
+  text.setAttribute("contenteditable", "true")
   text.classList.add("info-hotspot-text");
   text.innerHTML = "description";
 
@@ -160,13 +162,9 @@ function createInfoHotspotElement() {
     modal.classList.toggle("visible");
   };
 
-  // Show content when hotspot is clicked.
-  wrapperToggle = wrapper.querySelector(".info-hotspot-header");
-  wrapperToggle.addEventListener("click", toggle);
-
-  // Hide content when close icon is clicked.
-  modalToggle = modal.querySelector(".info-hotspot-close-wrapper");
-  modalToggle.addEventListener("click", toggle);
+  // Show/hide content when hotspot is clicked.
+  icon.addEventListener("click", toggle);
+  closeWrapper.addEventListener("click", toggle);
 
   //dragable hotspot
   function onDrag(event) {
@@ -174,30 +172,29 @@ function createInfoHotspotElement() {
     let left = parseInt(getStyle.left);
     let top = parseInt(getStyle.top);
 
-    console.log(event);
 
     wrapper.style.left = left + event.movementX + "px";
     wrapper.style.top = top + event.movementY + "px";
     dragging = true;
   }
 
+  
   icon.addEventListener("mousedown", () => {
-    viewer.controls().disable();
     icon.addEventListener("mousemove", onDrag);
     
   });
-  document.addEventListener("mouseup", () => {
-    viewer.controls().enable();
+  icon.addEventListener("mouseup", () => {
     icon.removeEventListener("mousemove", onDrag);
     if(dragging){
-      modalToggle.removeEventListener("click", toggle);
-      wrapperToggle.removeEventListener("click", toggle);
+      icon.removeEventListener("click", toggle);
     }else{
-      modalToggle.addEventListener("click", toggle);
-      wrapperToggle.addEventListener("click", toggle);
+      icon.addEventListener("click", toggle);
     }
     dragging = false;
   });
+
+  stopTouchAndScrollEventPropagation(wrapper);
+
 
   return wrapper;
 }
@@ -310,5 +307,19 @@ function switchButtonState(buttonType) {
       linkButton.classList.remove("active");
       isAddingLinkHotspot = !isAddingLinkHotspot;
     }
+  }
+}
+
+// Prevent touch and scroll events from reaching the parent element.
+function stopTouchAndScrollEventPropagation(element, eventList) {
+  var eventList = [
+    'touchstart', 'touchmove', 'touchend', 'touchcancel',
+    'pointerdown', 'pointermove', 'pointerup', 'pointercancel',
+    'wheel'
+  ];
+  for (var i = 0; i < eventList.length; i++) {
+    element.addEventListener(eventList[i], function(event) {
+      event.stopPropagation();
+    });
   }
 }
