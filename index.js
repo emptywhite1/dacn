@@ -234,7 +234,12 @@ function createLinkHotspotElement() {
     wrapper.style.top = top + event.movementY + "px";
   }
   function switchScene(event){
-    scenes[tooltip.value].switchTo();
+    if(tooltip.value <= scenes.length){
+      currentScene = tooltip.value
+    scenes[currentScene].switchTo();
+    }
+    
+    
   }
   wrapper.appendChild(icon);
   wrapper.appendChild(tooltip);
