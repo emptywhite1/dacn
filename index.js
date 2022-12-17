@@ -255,6 +255,8 @@ function createLinkHotspotElement() {
     }
     dragging = false;
   });
+
+  stopTouchAndScrollEventPropagation(wrapper);
   
   return wrapper;
 }
