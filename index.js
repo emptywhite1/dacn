@@ -59,6 +59,9 @@ function addScene() {
 }
 
 function nextScene() {
+  if (scenes.length == 0) {
+    alert("No scene has been added yet!");
+  }
   if (currentScene == scenes.length - 1) {
     currentScene = 0;
   } else currentScene++;
@@ -66,6 +69,9 @@ function nextScene() {
 }
 
 function previousScene() {
+  if (scenes.length == 0) {
+    alert("No scene has been added yet!!");
+  }
   if (currentScene == 0) {
     currentScene = scenes.length - 1;
   } else currentScene--;
@@ -80,23 +86,30 @@ function prepareAddLinkHotspot() {
 }
 
 function addInfoHotspot(e) {
-  if (!isAddingInfoHotspot) return;
-  let hotspot = createInfoHotspotElement();
-  position = getPosition(e);
+  while (scenes.length != 0) {
+    if (!isAddingInfoHotspot) return;
+    let hotspot = createInfoHotspotElement();
+    position = getPosition(e);
 
-  scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
+    scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
 
-  switchButtonState("info-button");
+    switchButtonState("info-button");
+  }
 }
 
 function addLinkHotspot(e) {
-  if (!isAddingLinkHotspot) return;
-  let hotspot = createLinkHotspotElement();
-  position = getPosition(e);
+  if (scenes.length == 0) {
+    alert("No scene has been added yet!!!");
+  }
+  while (scenes.length != 0) {
+    if (!isAddingLinkHotspot) return;
+    let hotspot = createLinkHotspotElement();
+    position = getPosition(e);
 
-  scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
+    scenes[currentScene].hotspotContainer().createHotspot(hotspot, position);
 
-  switchButtonState("link-button");
+    switchButtonState("link-button");
+  }
 }
 
 function createInfoHotspotElement() {
@@ -123,7 +136,7 @@ function createInfoHotspotElement() {
   var title = document.createElement("p");
   title.classList.add("info-hotspot-title");
   title.innerHTML = "Title";
-  title.setAttribute("contenteditable", "true")
+  title.setAttribute("contenteditable", "true");
   titleWrapper.appendChild(title);
 
   // Create close element.
@@ -141,7 +154,7 @@ function createInfoHotspotElement() {
 
   // Create text element.
   var text = document.createElement("p");
-  text.setAttribute("contenteditable", "true")
+  text.setAttribute("contenteditable", "true");
   text.classList.add("info-hotspot-text");
   text.innerHTML = "description";
 
@@ -169,28 +182,25 @@ function createInfoHotspotElement() {
     let left = parseInt(getStyle.left);
     let top = parseInt(getStyle.top);
 
-
     wrapper.style.left = left + event.movementX + "px";
     wrapper.style.top = top + event.movementY + "px";
     dragging = true;
   }
 
-  
   icon.addEventListener("mousedown", () => {
     icon.addEventListener("mousemove", onDrag);
   });
   icon.addEventListener("mouseup", () => {
     icon.removeEventListener("mousemove", onDrag);
-    if(dragging){
+    if (dragging) {
       icon.removeEventListener("click", toggle);
-    }else{
+    } else {
       icon.addEventListener("click", toggle);
     }
     dragging = false;
   });
 
   stopTouchAndScrollEventPropagation(wrapper);
-
 
   return wrapper;
 }
@@ -206,7 +216,6 @@ function createLinkHotspotElement() {
   icon.src = "img/icon/link.png";
   icon.classList.add("link-hotspot-icon");
 
-
   // Add click event handler.
   // wrapper.addEventListener('click', function() {
   //   switchScene(findSceneById(hotspot.target));
@@ -217,9 +226,9 @@ function createLinkHotspotElement() {
   //stopTouchAndScrollEventPropagation(wrapper);
 
   //Create tooltip element.
-  var tooltip = document.createElement('input');
-  tooltip.classList.add('hotspot-tooltip');
-  tooltip.classList.add('link-hotspot-tooltip');
+  var tooltip = document.createElement("input");
+  tooltip.classList.add("hotspot-tooltip");
+  tooltip.classList.add("link-hotspot-tooltip");
   tooltip.value = 0;
 
   // Drag link hotspot.
@@ -233,13 +242,11 @@ function createLinkHotspotElement() {
     wrapper.style.left = left + event.movementX + "px";
     wrapper.style.top = top + event.movementY + "px";
   }
-  function switchScene(event){
-    if(tooltip.value <= scenes.length){
-      currentScene = tooltip.value
-    scenes[currentScene].switchTo();
+  function switchScene(event) {
+    if (tooltip.value <= scenes.length) {
+      currentScene = tooltip.value;
+      scenes[currentScene].switchTo();
     }
-    
-    
   }
   wrapper.appendChild(icon);
   wrapper.appendChild(tooltip);
@@ -248,21 +255,20 @@ function createLinkHotspotElement() {
 
   icon.addEventListener("mousedown", () => {
     icon.addEventListener("mousemove", onDrag);
-    
   });
 
   icon.addEventListener("mouseup", () => {
     icon.removeEventListener("mousemove", onDrag);
-    if(dragging){
+    if (dragging) {
       icon.removeEventListener("click", switchScene);
-    }else{
+    } else {
       icon.addEventListener("click", switchScene);
     }
     dragging = false;
   });
 
   stopTouchAndScrollEventPropagation(wrapper);
-  
+
   return wrapper;
 }
 
@@ -319,12 +325,18 @@ function switchButtonState(buttonType) {
 // Prevent touch and scroll events from reaching the parent element.
 function stopTouchAndScrollEventPropagation(element, eventList) {
   var eventList = [
-    'touchstart', 'touchmove', 'touchend', 'touchcancel',
-    'pointerdown', 'pointermove', 'pointerup', 'pointercancel',
-    'wheel'
+    "touchstart",
+    "touchmove",
+    "touchend",
+    "touchcancel",
+    "pointerdown",
+    "pointermove",
+    "pointerup",
+    "pointercancel",
+    "wheel",
   ];
   for (var i = 0; i < eventList.length; i++) {
-    element.addEventListener(eventList[i], function(event) {
+    element.addEventListener(eventList[i], function (event) {
       event.stopPropagation();
     });
   }
