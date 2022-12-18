@@ -10,10 +10,9 @@ let isAddingInfoHotspot = false;
 let isAddingLinkHotspot = false;
 let dragging = false;
 let testTool;
-var autorotateToggleElement = document.querySelector('#autorotateToggle');
+var autorotateToggleElement = document.querySelector("#autorotateToggle");
 //var rect = { relativeWidth: 0.6, relativeHeight: 0.3, relativeX: 0.6 };
 inputElement.addEventListener("change", addPano, false);
-
 
 panoElement.addEventListener("click", addInfoHotspot);
 
@@ -274,7 +273,6 @@ function createLinkHotspotElement() {
   return wrapper;
 }
 
-
 function getPosition(e) {
   relX = e.clientX - panoElement.offsetLeft;
   relY = e.clientY - panoElement.offsetTop;
@@ -336,83 +334,139 @@ function stopTouchAndScrollEventPropagation(element, eventList) {
 
 // Viewer
 // DOM elements for view controls.
-var viewUpElement = document.querySelector('#viewUp');
-var viewDownElement = document.querySelector('#viewDown');
-var viewLeftElement = document.querySelector('#viewLeft');
-var viewRightElement = document.querySelector('#viewRight');
-var viewInElement = document.querySelector('#viewIn');
-var viewOutElement = document.querySelector('#viewOut');
+var viewUpElement = document.querySelector("#viewUp");
+var viewDownElement = document.querySelector("#viewDown");
+var viewLeftElement = document.querySelector("#viewLeft");
+var viewRightElement = document.querySelector("#viewRight");
+var viewInElement = document.querySelector("#viewIn");
+var viewOutElement = document.querySelector("#viewOut");
 
 // Dynamic parameters for controls.
 var velocity = 0.7;
 var friction = 3;
-var autorotateToggleElement = document.querySelector('#autorotateToggle');
+var autorotateToggleElement = document.querySelector("#autorotateToggle");
 
 // Associate view controls with elements.
 var controls = viewer.controls();
-controls.registerMethod('upElement',    new Marzipano.ElementPressControlMethod(viewUpElement,     'y', -velocity, friction), true);
-controls.registerMethod('downElement',  new Marzipano.ElementPressControlMethod(viewDownElement,   'y',  velocity, friction), true);
-controls.registerMethod('leftElement',  new Marzipano.ElementPressControlMethod(viewLeftElement,   'x', -velocity, friction), true);
-controls.registerMethod('rightElement', new Marzipano.ElementPressControlMethod(viewRightElement,  'x',  velocity, friction), true);
-controls.registerMethod('inElement',    new Marzipano.ElementPressControlMethod(viewInElement,  'zoom', -velocity, friction), true);
-controls.registerMethod('outElement',   new Marzipano.ElementPressControlMethod(viewOutElement, 'zoom',  velocity, friction), true);
+controls.registerMethod(
+  "upElement",
+  new Marzipano.ElementPressControlMethod(
+    viewUpElement,
+    "y",
+    -velocity,
+    friction
+  ),
+  true
+);
+controls.registerMethod(
+  "downElement",
+  new Marzipano.ElementPressControlMethod(
+    viewDownElement,
+    "y",
+    velocity,
+    friction
+  ),
+  true
+);
+controls.registerMethod(
+  "leftElement",
+  new Marzipano.ElementPressControlMethod(
+    viewLeftElement,
+    "x",
+    -velocity,
+    friction
+  ),
+  true
+);
+controls.registerMethod(
+  "rightElement",
+  new Marzipano.ElementPressControlMethod(
+    viewRightElement,
+    "x",
+    velocity,
+    friction
+  ),
+  true
+);
+controls.registerMethod(
+  "inElement",
+  new Marzipano.ElementPressControlMethod(
+    viewInElement,
+    "zoom",
+    -velocity,
+    friction
+  ),
+  true
+);
+controls.registerMethod(
+  "outElement",
+  new Marzipano.ElementPressControlMethod(
+    viewOutElement,
+    "zoom",
+    velocity,
+    friction
+  ),
+  true
+);
 
 // Preview
 function viewerPov() {
-  document.querySelector('.viewControlButton-1').style.display = "block"
-  document.querySelector('.viewControlButton-2').style.display = "block"
-  document.querySelector('.viewControlButton-3').style.display = "block"
-  document.querySelector('.viewControlButton-4').style.display = "block"
-  document.querySelector('.viewControlButton-5').style.display = "block"
-  document.querySelector('.viewControlButton-6').style.display = "block"
-  document.querySelector('#titleBar').style.display = "block"
-  document.querySelector('#autorotateToggle').style.display = "block"
-  document.querySelector('.button-bar').classList.remove("visible")
-  document.querySelector('#preview').classList.add("full")
-  document.querySelector('#pano').classList.add("full") 
-  viewer.updateSize()
+  document.querySelector(".viewControlButton-1").style.display = "block";
+  document.querySelector(".viewControlButton-2").style.display = "block";
+  document.querySelector(".viewControlButton-3").style.display = "block";
+  document.querySelector(".viewControlButton-4").style.display = "block";
+  document.querySelector(".viewControlButton-5").style.display = "block";
+  document.querySelector(".viewControlButton-6").style.display = "block";
+  document.querySelector(".viewControlButton-7").style.display = "block";
+  document.querySelector("#titleBar").style.display = "block";
+  document.querySelector("#autorotateToggle").style.display = "block";
+  document.querySelector(".button-bar").classList.remove("visible");
+  document.querySelector("#preview").classList.add("full");
+  document.querySelector("#pano").classList.add("full");
+  viewer.updateSize();
 }
 
 // Stop Preview
 function stopViewerPov() {
-  document.querySelector('.viewControlButton-1').style.display = "none"
-  document.querySelector('.viewControlButton-2').style.display = "none"
-  document.querySelector('.viewControlButton-3').style.display = "none"
-  document.querySelector('.viewControlButton-4').style.display = "none"
-  document.querySelector('.viewControlButton-5').style.display = "none"
-  document.querySelector('.viewControlButton-6').style.display = "none"
-  document.querySelector('#titleBar').style.display = "none"
-  document.querySelector('#autorotateToggle').style.display = "none"
-  document.querySelector('.button-bar').classList.add("visible")
-  document.querySelector('#preview').classList.remove("full")
-  document.querySelector('#pano').classList.remove("full") 
-  viewer.updateSize()
+  document.querySelector(".viewControlButton-1").style.display = "none";
+  document.querySelector(".viewControlButton-2").style.display = "none";
+  document.querySelector(".viewControlButton-3").style.display = "none";
+  document.querySelector(".viewControlButton-4").style.display = "none";
+  document.querySelector(".viewControlButton-5").style.display = "none";
+  document.querySelector(".viewControlButton-6").style.display = "none";
+  document.querySelector(".viewControlButton-7").style.display = "none";
+  document.querySelector("#titleBar").style.display = "none";
+  document.querySelector("#autorotateToggle").style.display = "none";
+  document.querySelector(".button-bar").classList.add("visible");
+  document.querySelector("#preview").classList.remove("full");
+  document.querySelector("#pano").classList.remove("full");
+  viewer.updateSize();
 }
 
-document.onkeydown = function(evt) {
+document.onkeydown = function (evt) {
   evt = evt || window.event;
   var isEscape = false;
   if ("key" in evt) {
-      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    isEscape = evt.key === "Escape" || evt.key === "Esc";
   } else {
-      isEscape = (evt.keyCode === 27);
+    isEscape = evt.keyCode === 27;
   }
   if (isEscape) {
-      stopViewerPov();
+    stopViewerPov();
   }
 };
 // Set up autorotate, if enabled.
 var autorotate = Marzipano.autorotate({
   yawSpeed: 0.03,
   targetPitch: 0,
-  targetFov: Math.PI/2
+  targetFov: Math.PI / 2,
 });
 
 // Set handler for autorotate toggle.
-autorotateToggleElement.addEventListener('click', toggleAutorotate);
+autorotateToggleElement.addEventListener("click", toggleAutorotate);
 
 function startAutorotate() {
-  if (!autorotateToggleElement.classList.contains('enabled')) {
+  if (!autorotateToggleElement.classList.contains("enabled")) {
     return;
   }
   viewer.startMovement(autorotate);
@@ -425,11 +479,11 @@ function stopAutorotate() {
 }
 
 function toggleAutorotate() {
-  if (autorotateToggleElement.classList.contains('enabled')) {
-    autorotateToggleElement.classList.remove('enabled');
+  if (autorotateToggleElement.classList.contains("enabled")) {
+    autorotateToggleElement.classList.remove("enabled");
     stopAutorotate();
   } else {
-    autorotateToggleElement.classList.add('enabled');
+    autorotateToggleElement.classList.add("enabled");
     startAutorotate();
   }
 }

@@ -469,6 +469,10 @@ body.view-control-buttons .viewControlButton {
   margin-left: 105px;
 }
 
+.viewControlButton-7 {
+  margin-left: 155px;
+}
+
 #titleBar {
   display: none;
   position: absolute;
