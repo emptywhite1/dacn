@@ -11,7 +11,7 @@ let isAddingInfoHotspot = false;
 let isAddingLinkHotspot = false;
 let dragging = false;
 let testTool;
-
+var autorotateToggleElement = document.querySelector('#autorotateToggle');
 //var rect = { relativeWidth: 0.6, relativeHeight: 0.3, relativeX: 0.6 };
 inputElement.addEventListener("change", addPano, false);
 
