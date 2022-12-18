@@ -238,7 +238,7 @@ function createLinkHotspotElement() {
     let left = parseInt(getStyle.left);
     let top = parseInt(getStyle.top);
 
-    console.log(event);
+    dragging = true;
 
     wrapper.style.left = left + event.movementX + "px";
     wrapper.style.top = top + event.movementY + "px";

@@ -107,8 +107,8 @@ input[type="button"] {
   overflow: hidden;
 }
 #pano.full { 
-  width: 100rem;
-  height: 48rem;
+  width: 102rem;
+  height: 50rem;
 }
 
 #screen-log {
