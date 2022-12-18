@@ -61,6 +61,8 @@ function addScene() {
 function nextScene() {
   if (scenes.length == 0) {
     alert("No scene has been added yet!");
+  } else if (scenes.length == 1) {
+    alert("There's no next scene!");
   }
   if (currentScene == scenes.length - 1) {
     currentScene = 0;
@@ -71,6 +73,8 @@ function nextScene() {
 function previousScene() {
   if (scenes.length == 0) {
     alert("No scene has been added yet!!");
+  } else if (scenes.length == 1) {
+    alert("There's no previous scene!");
   }
   if (currentScene == 0) {
     currentScene = scenes.length - 1;
