@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="button-bar">
+    <div class="button-bar visible">
       <label class="custom-button">
         <input id="filesInput" type="file" />
         Upload Image
@@ -52,19 +52,12 @@
         />
         Preview
       </label>
-      <label class="custom-button">
-        <input
-          id="viewer"
-          type="button"
-          value="StopPreview"
-          onclick="stopViewerPov()"
-        />
-        Stop Preview
-      </label>
+      
     </div>
 
     <div id="editor">
       <div id="preview">
+        <div id="pano"></div></div>
         <div id="titleBar">
           <h1 class="sceneName"></h1>
         </div>
@@ -90,10 +83,8 @@
         <a href="javascript:void(0)" id="viewOut" class="viewControlButton viewControlButton-6">
           <img class="icon" src="img/icon/minus.png">
         </a>
-        <div id="pano"></div></div>
+        
     </div>
-
-    <p id="screen-log"></p>
 
     <script src="marzipano.js"></script>
     <script src="index.js"></script>

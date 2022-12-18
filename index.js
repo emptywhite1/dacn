@@ -1,6 +1,5 @@
 const panoElement = document.getElementById("pano");
 const inputElement = document.getElementById("filesInput");
-const screenLog = document.getElementById("screen-log");
 const preview = document.getElementById("preview");
 const linkButton = document.getElementById("link-button");
 const infoButton = document.getElementById("info-button");
@@ -15,7 +14,6 @@ var autorotateToggleElement = document.querySelector('#autorotateToggle');
 //var rect = { relativeWidth: 0.6, relativeHeight: 0.3, relativeX: 0.6 };
 inputElement.addEventListener("change", addPano, false);
 
-panoElement.addEventListener("mousemove", logKey);
 
 panoElement.addEventListener("click", addInfoHotspot);
 
@@ -276,16 +274,6 @@ function createLinkHotspotElement() {
   return wrapper;
 }
 
-function logKey(e) {
-  relX = e.clientX - panoElement.offsetLeft;
-  relY = e.clientY - panoElement.offsetTop;
-  panoPosition = view.screenToCoordinates({ x: relX, y: relY });
-  screenLog.innerText = `
-    Screen X/Y: ${e.screenX}, ${e.screenY}
-    Client X/Y: ${relX}, ${relY}
-    Pano Yaw/Pitch: ${panoPosition.yaw}, ${panoPosition.pitch}`;
-  return panoPosition;
-}
 
 function getPosition(e) {
   relX = e.clientX - panoElement.offsetLeft;
@@ -379,6 +367,9 @@ function viewerPov() {
   document.querySelector('.viewControlButton-6').style.display = "block"
   document.querySelector('#titleBar').style.display = "block"
   document.querySelector('#autorotateToggle').style.display = "block"
+  document.querySelector('.button-bar').classList.remove("visible")
+  document.querySelector('#preview').classList.add("full")
+  document.querySelector('#pano').classList.add("full") 
 }
 
 // Stop Preview
@@ -391,8 +382,23 @@ function stopViewerPov() {
   document.querySelector('.viewControlButton-6').style.display = "none"
   document.querySelector('#titleBar').style.display = "none"
   document.querySelector('#autorotateToggle').style.display = "none"
+  document.querySelector('.button-bar').classList.add("visible")
+  document.querySelector('#preview').classList.remove("full")
+  document.querySelector('#pano').classList.remove("full") 
 }
 
+document.onkeydown = function(evt) {
+  evt = evt || window.event;
+  var isEscape = false;
+  if ("key" in evt) {
+      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+  } else {
+      isEscape = (evt.keyCode === 27);
+  }
+  if (isEscape) {
+      stopViewerPov();
+  }
+};
 // Set up autorotate, if enabled.
 var autorotate = Marzipano.autorotate({
   yawSpeed: 0.03,

@@ -31,10 +31,8 @@ body {
   color: #fff;
   background-image: url(./img/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg);
 }
-
-.button-bar {
+.button-bar{
   border: 1px solid black;
-  display: inline-block;
   flex-direction: column;
   justify-content: center;
   margin-top: 3rem;
@@ -44,10 +42,14 @@ body {
   height: fit-content;
   border-radius: 5%;
   background-color: rgb(170, 160, 160);
-  width: 200px;
+  width: 175px;
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: #000;
+  display: none;
+}
+.button-bar.visible {
+  display: inline-block;
 }
 
 input[type="file"] {
@@ -94,11 +96,19 @@ input[type="button"] {
   margin-top: 3rem;
 }
 
+#preview.full {
+  margin: 0px;
+}
+
 #pano {
   position: relative;
   width: 60rem;
   height: 40rem;
   overflow: hidden;
+}
+#pano.full { 
+  width: 100rem;
+  height: 48rem;
 }
 
 #screen-log {
@@ -540,3 +550,4 @@ body.fullscreen-enabled.mobile #autorotateToggle {
 #autorotateToggle.enabled .icon.off {
   display: none;
 }
+
