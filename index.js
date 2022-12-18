@@ -370,6 +370,7 @@ function viewerPov() {
   document.querySelector('.button-bar').classList.remove("visible")
   document.querySelector('#preview').classList.add("full")
   document.querySelector('#pano').classList.add("full") 
+  viewer.updateSize()
 }
 
 // Stop Preview
@@ -385,6 +386,7 @@ function stopViewerPov() {
   document.querySelector('.button-bar').classList.add("visible")
   document.querySelector('#preview').classList.remove("full")
   document.querySelector('#pano').classList.remove("full") 
+  viewer.updateSize()
 }
 
 document.onkeydown = function(evt) {
