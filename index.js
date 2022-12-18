@@ -345,3 +345,82 @@ function stopTouchAndScrollEventPropagation(element, eventList) {
     });
   }
 }
+
+// Viewer
+// DOM elements for view controls.
+var viewUpElement = document.querySelector('#viewUp');
+var viewDownElement = document.querySelector('#viewDown');
+var viewLeftElement = document.querySelector('#viewLeft');
+var viewRightElement = document.querySelector('#viewRight');
+var viewInElement = document.querySelector('#viewIn');
+var viewOutElement = document.querySelector('#viewOut');
+
+// Dynamic parameters for controls.
+var velocity = 0.7;
+var friction = 3;
+
+// Associate view controls with elements.
+var controls = viewer.controls();
+controls.registerMethod('upElement',    new Marzipano.ElementPressControlMethod(viewUpElement,     'y', -velocity, friction), true);
+controls.registerMethod('downElement',  new Marzipano.ElementPressControlMethod(viewDownElement,   'y',  velocity, friction), true);
+controls.registerMethod('leftElement',  new Marzipano.ElementPressControlMethod(viewLeftElement,   'x', -velocity, friction), true);
+controls.registerMethod('rightElement', new Marzipano.ElementPressControlMethod(viewRightElement,  'x',  velocity, friction), true);
+controls.registerMethod('inElement',    new Marzipano.ElementPressControlMethod(viewInElement,  'zoom', -velocity, friction), true);
+controls.registerMethod('outElement',   new Marzipano.ElementPressControlMethod(viewOutElement, 'zoom',  velocity, friction), true);
+
+// Preview
+function viewerPov() {
+  document.querySelector('.viewControlButton-1').style.display = "block"
+  document.querySelector('.viewControlButton-2').style.display = "block"
+  document.querySelector('.viewControlButton-3').style.display = "block"
+  document.querySelector('.viewControlButton-4').style.display = "block"
+  document.querySelector('.viewControlButton-5').style.display = "block"
+  document.querySelector('.viewControlButton-6').style.display = "block"
+  document.querySelector('#titleBar').style.display = "block"
+  document.querySelector('#autorotateToggle').style.display = "block"
+}
+
+// Stop Preview
+function stopViewerPov() {
+  document.querySelector('.viewControlButton-1').style.display = "none"
+  document.querySelector('.viewControlButton-2').style.display = "none"
+  document.querySelector('.viewControlButton-3').style.display = "none"
+  document.querySelector('.viewControlButton-4').style.display = "none"
+  document.querySelector('.viewControlButton-5').style.display = "none"
+  document.querySelector('.viewControlButton-6').style.display = "none"
+  document.querySelector('#titleBar').style.display = "none"
+  document.querySelector('#autorotateToggle').style.display = "none"
+}
+
+// Set up autorotate, if enabled.
+var autorotate = Marzipano.autorotate({
+  yawSpeed: 0.03,
+  targetPitch: 0,
+  targetFov: Math.PI/2
+});
+
+// Set handler for autorotate toggle.
+autorotateToggleElement.addEventListener('click', toggleAutorotate);
+
+function startAutorotate() {
+  if (!autorotateToggleElement.classList.contains('enabled')) {
+    return;
+  }
+  viewer.startMovement(autorotate);
+  viewer.setIdleMovement(3000, autorotate);
+}
+
+function stopAutorotate() {
+  viewer.stopMovement();
+  viewer.setIdleMovement(Infinity);
+}
+
+function toggleAutorotate() {
+  if (autorotateToggleElement.classList.contains('enabled')) {
+    autorotateToggleElement.classList.remove('enabled');
+    stopAutorotate();
+  } else {
+    autorotateToggleElement.classList.add('enabled');
+    startAutorotate();
+  }
+}
