@@ -43,10 +43,54 @@
         />
         Next Scene
       </label>
+      <label class="custom-button">
+        <input
+          id="viewer"
+          type="button"
+          value="Preview"
+          onclick="viewerPov()"
+        />
+        Preview
+      </label>
+      <label class="custom-button">
+        <input
+          id="viewer"
+          type="button"
+          value="StopPreview"
+          onclick="stopViewerPov()"
+        />
+        Stop Preview
+      </label>
     </div>
 
     <div id="editor">
-      <div id="preview"><div id="pano"></div></div>
+      <div id="preview">
+        <div id="titleBar">
+          <h1 class="sceneName"></h1>
+        </div>
+        <a href="javascript:void(0)" id="autorotateToggle">
+          <img class="icon off" src="img/icon/play.png">
+          <img class="icon on" src="img/icon/pause.png">
+        </a>
+        <a href="javascript:void(0)" id="viewUp" class="viewControlButton viewControlButton-1">
+          <img class="icon" src="img/icon/up.png">
+        </a>
+        <a href="javascript:void(0)" id="viewDown" class="viewControlButton viewControlButton-2">
+          <img class="icon" src="img/icon/down.png">
+        </a>
+        <a href="javascript:void(0)" id="viewLeft" class="viewControlButton viewControlButton-3">
+          <img class="icon" src="img/icon/left.png">
+        </a>
+        <a href="javascript:void(0)" id="viewRight" class="viewControlButton viewControlButton-4">
+          <img class="icon" src="img/icon/right.png">
+        </a>
+        <a href="javascript:void(0)" id="viewIn" class="viewControlButton viewControlButton-5">
+          <img class="icon" src="img/icon/plus.png">
+        </a>
+        <a href="javascript:void(0)" id="viewOut" class="viewControlButton viewControlButton-6">
+          <img class="icon" src="img/icon/minus.png">
+        </a>
+        <div id="pano"></div></div>
     </div>
 
     <p id="screen-log"></p>
